@@ -17,7 +17,7 @@
 
 // Front slide
 #front-slide(
-  title: "Multi-View LP Bounds for Availability-LRCs",
+  title: "Multi-View LP Bounds for LRC with Availability",
   subtitle: [Delsarte Linear Programming Bounds in Coding Theory],
   authors: "Po-Wei Lai",
   info: [],
@@ -287,7 +287,7 @@
   - the projected code $C|_(T_(i,h))$ has minimum distance at least $delta$,
   - the helper sets $S_(i,1),...,S_(i,a)$ are pairwise disjoint.
 
-  Since $delta >= 2$, each view can recover an erased coordinate from the other symbols in that view. This local-distance condition is stronger than functional recovery alone. [1]
+  Since $delta >= 2$, each view can recover an erased coordinate from the other symbols in that view. This local-distance condition is stronger than functional recovery alone.
 ]
 
 #slide(title: "Partition around Each Coordinate")[
@@ -504,14 +504,17 @@
   )
 ]
 
-#slide(title: "Numerical Results & Key Insights")[
-  - *Main Contributions*:
-    1. Extended classical Delsarte LP to high-dimensional local distance distributions.
-    2. Derived new upper bounds for $(r, delta, a=2)$-availability LRCs.
-    3. Numerical computations show our Multi-View LP bound strictly improves upon existing single-view bounds for intermediate blocklengths.
+#slide(title: "Main Contributions")[
+  + Extended classical Delsarte LP to high-dimensional local distance distributions.
+  + Derived new upper bounds for $(r, delta, a=2)$-availability LRCs.
+  + Implemented LRC LP bound for general $(q, n, d, r, delta, a)$.
 
-  // - *Future Work*:
-  //   - Extending $a=2$ multi-view formulation to general $a$-availability.
+\
+  All the related files are uploaded on my Github repo: \
+  https://github.com/poposaber/availability-lrc \
+  \
+  Also, our paper about this project is already on ArXiv: \ 
+  https://arxiv.org/abs/2609.39230
 ]
 
 
