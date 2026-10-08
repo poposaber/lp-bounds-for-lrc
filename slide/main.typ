@@ -43,9 +43,12 @@
 #slide(title: "From the Example to the Language of Codes")[
   - The two allowed messages are a subset of all length-three binary strings:
 
-  #block(fill: rgb("f4f4f6"), inset: 12pt, radius: 4pt)[
-    #align(center)[$C = {000, 111} subset.eq {0, 1}^3$]
-  ]
+  $
+    C = {000, 111} subset.eq {0, 1}^3
+  $
+  // #block(fill: rgb("f4f4f6"), inset: 12pt, radius: 4pt)[
+  //   #align(center)[$C = {000, 111} subset.eq {0, 1}^3$]
+  // ]
 
   - The set $C$ is a *code*; each member is a *codeword*.
   - Its parameters are length $n = 3$, size $|C| = 2$, and minimum distance $d = 3$.
@@ -126,18 +129,23 @@
     4. $sum_(x in FF_q^n) a_C (x) = |C|$
 ]
 
-#slide(title: "Fourier Transform for Finite Abelian Groups")[
+#slide(title: "A Frequency View: Fourier Transform")[
+  The difference distribution is a function on the additive group $FF_q^n$. Instead of treating every shift $x$ separately, we can ask how this function aligns with simple patterns across the group.
 
-  - *Definition 3.2 (Fourier Transform for Finite Abelian Groups)* \
-    For finite abelian group $G$, given $f: G --> CC$, the Fourier transform \
-    $hat(f): hat(G) --> CC$ of $f$ is defined by: 
-    $ hat(f) (chi) = sum_(x in G) f(x) overline(chi(x)) $
-    where $hat(G)$ is the set of all homomorphisms from $G$ to $CC^times$.
-  
+  - These patterns are *characters*: homomorphisms $chi: G --> CC^times$. They play the role of frequency modes on a finite group.
+
+  - For the difference distribution, this frequency view will reveal a non-negativity property and give us the key constraints for the LP.
+]
+
+#slide(title: "A Frequency View: Fourier Transform")[
+  *Definition 3.2 (Fourier Transform)* \
+  For a function $f: G --> CC$ on a finite abelian group, its Fourier transform records its correlation with each character:
+  $ hat(f) (chi) = sum_(x in G) f(x) overline(chi(x)), quad chi in hat(G) $
+  where $hat(G)$ is the set of characters of $G$.
 ]
 
 #slide(title: "Connection to Fourier Analysis")[
-  - Notice that $a_C(x)$ can be rewritten as an *autocorrelation*:
+  - Notice that $a_C (x)$ can be rewritten as an *autocorrelation*:
     $
       a_C (x) = 1 / (|C|) sum_(y in FF_q^n) bb(1)_C (y) bb(1)_C (y - x)
     $
@@ -149,12 +157,15 @@
 
   - *Fourier Non-negativity Constraint*:
     - The Fourier coefficients of $a_C$ are *always non-negative*!
+  
+  - Study shows that the characters are of the form
+    $chi_u (x) = exp((2 pi i)/p tr(sum_(j=1)^n u_j x_j))$
 ]
 
 #slide(title: "Singleton-level LP Bound")[
   - We can formulate the code size bound as a *Linear Program*:
-
-  #block(fill: rgb("f4f4f6"), inset: 10pt, radius: 4pt)[
+  
+  #block(fill: rgb("f4f4f6"), inset: 10pt, radius: 4pt, width: 100%)[
     *Maximize*
     $
       sum_(x in FF_q^n) a(x)
@@ -190,7 +201,7 @@
 #slide(title: "The Delsarte LP: One Variable Per Distance")[
   For a code with minimum distance at least $d$, maximize the total distance-distribution mass:
 
-  #block(fill: rgb("f4f4f6"), inset: 10pt, radius: 4pt)[
+  #block(fill: rgb("f4f4f6"), inset: 10pt, radius: 4pt, width: 100%)[
     *Maximize* 
     $
       sum_(j=0)^n A(j)
@@ -293,12 +304,16 @@
 #slide(title: "Partition around Each Coordinate")[
   For two available views, fix a coordinate $i$ and split all coordinates into four disjoint blocks:
 
-  #block(fill: rgb("f4f4f6"), inset: 12pt, radius: 4pt)[
-    #align(center)[
-      $S_(i,1)$ #h(0.5em) $S_(i,2)$ #h(0.5em) ${i}$ #h(0.5em) $O_i$
-    ]
-    #align(center)[$[n] = S_(i,1) union S_(i,2) union {i} union O_i$]
-  ]
+  // #block(fill: rgb("f4f4f6"), inset: 12pt, radius: 4pt)[
+  //   #align(center)[
+  //     $S_(i,1)$ #h(0.5em) $S_(i,2)$ #h(0.5em) ${i}$ #h(0.5em) $O_i$
+  //   ]
+  //   #align(center)[$[n] = S_(i,1) union S_(i,2) union {i} union O_i$]
+  // ]
+  $
+    S_(i,1) #h(1em) S_(i,2) #h(1em) {i} #h(1em) O_i \
+    [n] = S_(i,1) union.sq S_(i,2) union.sq {i} union.sq O_i
+  $
 
   For an ordered pair of codewords $(x,y)$, record four distances:
   - $j = d_(S_(i,1)) (x,y)$ and $k = d_(S_(i,2)) (x,y)$,
@@ -308,43 +323,21 @@
 ]
 
 #slide(title: "The Multi-view Distribution")[
-  Let $M = |C|$, $t_h = |T_(i,h)|$, and $u = t_1+t_2-1$. Average over ordered pairs and recovered coordinates:
+  Let $M = |C|$, and $u = t_1+t_2-1$. Average over ordered pairs and recovered coordinates:
 
-  #block(fill: rgb("f4f4f6"), inset: 10pt, radius: 4pt)[
-    #align(center)[$Z_C (t_1,t_2,j,k,c,b) = 1/(n M) |{(x,y,i): |T_(i,h)|=t_h, d_(S_(i,1)) (x,y)=j, d_(S_(i,2)) (x,y)=k, d_(O_i) (x,y)=c, 1_(x_i != y_i)=b}|$]
-  ]
+  // #block(fill: rgb("f4f4f6"), inset: 10pt, radius: 4pt)[
+  //   #align(center)[$Z_C (t_1,t_2,j,k,c,b) = 1/(n M) |{(x,y,i): |T_(i,h)|=t_h, d_(S_(i,1)) (x,y)=j, d_(S_(i,2)) (x,y)=k, d_(O_i) (x,y)=c, 1_(x_i != y_i)=b}|$]
+  // ]
+  $
+    Z_C (t_1,t_2,j,k,c,b) = 1/(n M) |{(x,y,i): mat(delim: #none, |T_(i,1)|=t_1", ", |T_(i,1)|=t_2", ", ; 
+    d_(S_(i,1)) (x,y)=j", ", d_(S_(i,2)) (x,y)=k", ", ; 
+    d_(O_i) (x,y)=c", ", 1_(x_i != y_i)=b) }|
+  $
 
   - The index $b$ separates pairs that agree or differ at the recovered coordinate.
-  - The outside block has length $n-u$, so $0 <= c <= n-u$.
+  - The outside block has length $n-t_1-t_2+1$, so $0 <= c <= n-t_1-t_2+1$.
   - The global distance is already encoded: $ell = j+k+c+b$.
 ]
-
-// #slide(title: "Centering links local counts to the global distribution")[
-//   Let $A_C (ell) = 1/M |{(x,y) in C^2 : dh (x,y)=ell}| = sum_(t_1, t_2) sum_(j+k+c+b=ell) Z_C (t_1,t_2,j,k,c,b)$. \
-//   For a pair at distance $ell$, exactly $ell$ of the $n$ coordinates differ.
-
-//   #block(fill: rgb("f4f4f6"), inset: 10pt, radius: 4pt)[
-//     #align(center)[$sum_(t_1,t_2) sum_(j+k+c=ell) Z_C (t_1,t_2;j,k,c,0) = (n-ell)/n A_C (ell)$]
-//     #align(center)[$sum_(t_1,t_2) sum_(j+k+c+1=ell) Z_C (t_1,t_2;j,k,c,1) = ell/n A_C (ell)$]
-//   ]
-
-//   - The first line counts coordinates where the pair agrees; the second counts where it differs.
-//   - These are identities, not relaxations: every code induces values satisfying them exactly.
-// ]
-
-// #slide(title: "Four blocks, four frequency degrees")[
-//   Apply the same Fourier idea independently on the two helper blocks, the recovered coordinate, and the outside block:
-
-//   #set text(size: 16pt)
-//   #block(fill: rgb("f4f4f6"), inset: 10pt, radius: 4pt)[
-//     #align(center)[$P (j,k,c,b) := K_(p_1)(j;t_1-1,q) K_(p_2)(k;t_2-1,q)$]
-//     #align(center)[$quad times K_eta(c;n-u,q) K_e(b;1,q)$]
-//     #align(center)[$Phi_C (t_1,t_2;p_1,p_2,eta,e) := sum_(j,k,c,b) Z_C (t_1,t_2;j,k,c,b) P(j,k,c,b) >= 0$]
-//   ]
-
-//   - $p_1,p_2,eta,e$ select a frequency in each of the four blocks.
-//   - Each transformed value is a sum of squared character magnitudes, so it cannot be negative.
-// ]
 
 #slide(title: "Four Constraints")[
   #table(
@@ -361,19 +354,16 @@
     [Collisions], [Small local projections force many codeword pairs to agree there.],
     table.hline(stroke: 1.5pt),
   )
-
-//   The next slides first explain *why* these restrictions hold, then write them as the LP's complete subject-to conditions.
 ]
 
 #slide(title: "The Actual Multi-view LP: Variables and Objective")[
-  Fix $q,n,d,r,delta$ and $a=2$. Let $u=t_1+t_2-1$.
+  Fix $q,n,d,r,delta$ and $a=2$.
 
-  #set text(size: 17pt)
-  #block(fill: rgb("f4f4f6"), inset: 12pt, radius: 4pt)[
+  #block(fill: rgb("f4f4f6"), inset: 12pt, radius: 4pt, width: 100%)[
     Variables
     - $Z(t_1,t_2,j,k,c,b) >= 0$ on admissible indices:
     - $delta <= t_1,t_2 <= min(n,r+delta-1), quad t_1+t_2-1 <= n$
-    - $0<=j<t_1, quad 0<=k<t_2, quad 0<=c<=n-u, quad b in {0,1}$
+    - $0<=j<t_1, quad 0<=k<t_2, quad 0<=c<=n-t_1-t_2+1, quad b in {0,1}$
 
     Global distribution
     - $A(ell) := sum_(t_1,t_2) sum_(j+k+c+b=ell) Z(t_1,t_2,j,k,c,b)$
@@ -388,44 +378,47 @@
   For a pair at distance $ell$, exactly $ell$ of the $n$ possible recovered coordinates differ.
   The centered identities split the global mass according to $b$:
 
-  #set text(size: 17pt)
-  #block(fill: rgb("f4f4f6"), inset: 12pt, radius: 4pt)[
-    #align(center)[$sum_(t_1,t_2) sum_(j+k+c=ell) Z(t_1,t_2,j,k,c,0) = (n-ell)/n A(ell)$]
-    #align(center)[$sum_(t_1,t_2) sum_(j+k+c+1=ell) Z(t_1,t_2,j,k,c,1) = ell/n A(ell)$]
+  #block(fill: rgb("f4f4f6"), inset: 12pt, radius: 4pt, width: 100%)[
+    $sum_(t_1,t_2) sum_(j+k+c=ell) Z(t_1,t_2,j,k,c,0) = (n-ell)/n A(ell)$ \
+    $sum_(t_1,t_2) sum_(j+k+c+1=ell) Z(t_1,t_2,j,k,c,1) = ell/n A(ell)$
   ]
 
   The global distance distribution also satisfies:
-  #align(center)[$A(0)=1, quad A(ell)>=0, quad A(ell)=0 text(" for ") 1<=ell<max(d,delta)$]
+  #block(fill: rgb("f4f4f6"), inset: 12pt, radius: 4pt, width: 100%)[
+    $A(0)=1,$ \ $A(ell)>=0 " for all "ell,$ \ $A(ell)=0 text(" for ") 1<=ell<max(d,delta)$
+  ]
 ]
 
 #slide(title: "Subject to Distance Support")[
   Short distances are forbidden by the global distance and the local-distance requirement.
-  Write $d^star = max(d,delta)$.
 
-  #set text(size: 18pt)
-  #block(fill: rgb("f4f4f6"), inset: 14pt, radius: 4pt)[
-    *Local views*
-    #align(center)[$Z(t_1,t_2,j,k,c,b)=0 text(" if ") 1<=j+b<delta$]
-    #align(center)[$Z(t_1,t_2,j,k,c,b)=0 text(" if ") 1<=k+b<delta$]
+  #block(fill: rgb("f4f4f6"), inset: 14pt, radius: 4pt, width: 100%)[
+    *Local views* \
+    $Z(t_1,t_2,j,k,c,b)=0 text(" if ") 1<=j+b<delta$ \
+    $Z(t_1,t_2,j,k,c,b)=0 text(" if ") 1<=k+b<delta$
 
-    *Global code distance*
-    #align(center)[$Z(t_1,t_2,j,k,c,b)=0 text(" if ") 1<=j+k+c+b<d^star$]
+    *Global code distance* \
+    $Z(t_1,t_2,j,k,c,b)=0 text(" if ") 1<=j+k+c+b<max(d,delta)$
   ]
 
   The first two conditions protect each repair view; the last excludes globally too-close codeword pairs.
 ]
 
 #slide(title: "Subject to Product-Krawtchouk Positivity")[
-  Every frequency tuple gives a nonnegative transform of the four-block distribution:
-
-  #set text(size: 16pt)
-  #block(fill: rgb("f4f4f6"), inset: 12pt, radius: 4pt)[
-    #align(center)[$P(j,k,c,b) := K_(p_1) (j;t_1-1,q) K_(p_2) (k;t_2-1,q)$]
-    #align(center)[$quad times K_eta (c;n-u,q) K_e (b;1,q)$]
-    #align(center)[$Phi_C (t_1,t_2;p_1,p_2,eta,e) := sum_(j,k,c,b) Z_C (t_1,t_2;j,k,c,b) P(j,k,c,b) >= 0$]
+  Every frequency tuple gives a nonnegative transform of the four-block distribution: \
+  Let 
+  $
+    P(j,k,c,b) := & K_(p_1) (j;t_1-1,q) K_(p_2) (k;t_2-1,q) \
+    & times K_eta (c;n-u,q) K_e (b;1,q)
+  $
+  We have: 
+  #block(fill: rgb("f4f4f6"), inset: 12pt, radius: 4pt, width: 100%)[
+    $Phi_C (t_1,t_2;p_1,p_2,eta,e) := sum_(j,k,c,b) Z_C (t_1,t_2;j,k,c,b) P(j,k,c,b) >= 0, "for"$ \
+    \
+    $0<=p_1<t_1, quad 0<=p_2<t_2, quad 0<=eta<=n-t_1-t_2+1, quad e in {0,1}$
   ]
 
-  #align(center)[$0<=p_1<t_1, quad 0<=p_2<t_2, quad 0<=eta<=n-u, quad e in {0,1}$]
+  
 
   This is imposed for every admissible $(t_1,t_2)$ and every frequency tuple in these ranges.
 ]
@@ -436,9 +429,9 @@
 
   If $f_z$ codewords have projection $z$, then Cauchy-Schwarz gives:
 
-  #block(fill: rgb("f4f4f6"), inset: 12pt, radius: 4pt)[
-    #align(center)[$q^(L-delta+1) sum_z f_z^2 >= M^2$]
-  ]
+  $
+    q^(L-delta+1) sum_z f_z^2 >= M^2
+  $
 
   This is the normalized number of ordered pairs that *collide* on the projection.
   - Apply it to the first local view.
@@ -448,17 +441,15 @@
 
 #slide(title: "Subject to Local Collision Inequalities")[
   Let $m(t_1,t_2)=sum_(j,k,c,b) Z(t_1,t_2,j,k,c,b)$ be the total mass for a fixed pair of view lengths.
+  #block(fill: rgb("f4f4f6"), inset: 12pt, radius: 4pt, width: 100%)[
+    *First local view* \
+    $q^(t_1-delta+1) sum_(k,c) Z(t_1,t_2,0,k,c,0) >= m(t_1,t_2)$
 
-  #set text(size: 16pt)
-  #block(fill: rgb("f4f4f6"), inset: 12pt, radius: 4pt)[
-    *First local view*
-    #align(center)[$q^(t_1-delta+1) sum_(k,c) Z(t_1,t_2,0,k,c,0) >= m(t_1,t_2)$]
+    *Second local view* \
+    $q^(t_2-delta+1) sum_(j,c) Z(t_1,t_2,j,0,c,0) >= m(t_1,t_2)$
 
-    *Second local view*
-    #align(center)[$q^(t_2-delta+1) sum_(j,c) Z(t_1,t_2,j,0,c,0) >= m(t_1,t_2)$]
-
-    *Punctured union of helper sets*
-    #align(center)[$q^(t_1+t_2-delta-1) sum_c Z(t_1,t_2,0,0,c,0) >= m(t_1,t_2)$]
+    *Punctured union of helper sets* \
+    $q^(t_1+t_2-delta-1) sum_c Z(t_1,t_2,0,0,c,0) >= m(t_1,t_2)$
   ]
 
   The first two rows use each full repair view; the last uses both helper sets with the recovered coordinate removed.
