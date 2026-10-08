@@ -97,7 +97,9 @@
 
   - *Classical Combinatorial Bounds*:
     - *Singleton Bound*: $|C| <= q^(n - d + 1)$
+    \
     - *Hamming (Sphere-Packing) Bound*: $|C| <= q^n / (sum_(j=0)^floor((d-1)/2) binom(n, j) (q-1)^j)$
+    \
     - *Plotkin Bound* (for binary $2d > n$): $|C| <= (2d) / (2d - n)$
 ]
 
@@ -501,10 +503,10 @@
   + Implemented LRC LP bound for general $(q, n, d, r, delta, a)$.
 
 \
-  All the related files are uploaded on my Github repo: \
-  https://github.com/poposaber/availability-lrc \
+  All the related files are uploaded on my GitHub repo: \
+  https://github.com/poposaber/lp-bounds-for-lrc \
   \
-  Also, our paper about this project is already on ArXiv: \ 
+  Also, our paper about this project is already published on ArXiv: \ 
   https://arxiv.org/abs/2609.39230
 ]
 
