@@ -120,7 +120,7 @@
   - *Definition 3.1 (Difference Distribution)* \
     For $C subset.eq FF_q^n$, define $a_C: FF_q^n arrow.r RR$ as:
     $
-      a_C (x) := 1 / (|C|) |{(y, z) in C^2 : y - z = x}|
+      a_C (x) := 1 / (abs(C)) abs({(y, z) in C^2 : y - z = x})
     $
     *(Intuition: Average number of codeword pairs with difference $x$.)*
 
@@ -154,7 +154,7 @@
   
   - Applying Fourier Transform on Finite Abelian Group $FF_q^n$:
     $
-      hat(a_C) (chi) = 1 / (|C|) |sum_(y in FF_q^n) bb(1)_C (y) overline(chi(y))|^2 >= 0
+      hat(a_C) (chi) = 1 / (|C|) abs(sum_(y in FF_q^n) bb(1)_C (y) overline(chi(y)))^2 >= 0
     $
 
   - *Fourier Non-negativity Constraint*:
@@ -331,9 +331,9 @@
   //   #align(center)[$Z_C (t_1,t_2,j,k,c,b) = 1/(n M) |{(x,y,i): |T_(i,h)|=t_h, d_(S_(i,1)) (x,y)=j, d_(S_(i,2)) (x,y)=k, d_(O_i) (x,y)=c, 1_(x_i != y_i)=b}|$]
   // ]
   $
-    Z_C (t_1,t_2,j,k,c,b) = 1/(n M) |{(x,y,i): mat(delim: #none, |T_(i,1)|=t_1", ", |T_(i,1)|=t_2", ", ; 
+    Z_C (t_1,t_2,j,k,c,b) = 1/(n M) abs({(x,y,i): mat(delim: #none, |T_(i,1)|=t_1", ", |T_(i,1)|=t_2", ", ; 
     d_(S_(i,1)) (x,y)=j", ", d_(S_(i,2)) (x,y)=k", ", ; 
-    d_(O_i) (x,y)=c", ", 1_(x_i != y_i)=b) }|
+    d_(O_i) (x,y)=c", ", 1_(x_i != y_i)=b) })
   $
 
   - The index $b$ separates pairs that agree or differ at the recovered coordinate.
