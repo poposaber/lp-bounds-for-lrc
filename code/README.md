@@ -63,5 +63,5 @@ py -3 -m pip install scipy cvxpy
 ## Notes
 
 - The implementation is research-oriented and intended for exploration of bound behavior under various parameters.
-- The LP formulation is computationally heavier than classical bound calculations, especially for larger values of `n`, `a`, and `delta`.
+- The LP formulation is computationally heavier than classical bound calculations, especially for larger values of `n`, `delta`, and `a`.
 - The equations and optimization structure are designed to reflect multi-view block distance distributions for LRCs with availability constraints.

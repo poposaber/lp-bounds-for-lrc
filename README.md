@@ -13,9 +13,8 @@ This repository implements the computational framework used to study those bound
 ## Structure of This Repository
 
 - `code/` — Python implementation of the LP-based bound calculations and comparison scripts.
-- `paper/` — PDF copy of the related research paper.
+- `paper/` — PDF copy of our paper on ArXiv.
 - `slide/` — slides for presenting the work.
-- `README.md` — project-level summary and entry points.
 
 ## Requirements
 
@@ -65,10 +64,6 @@ The main LP routine is parameterized by:
 - `a` — availability parameter.
 
 These parameters correspond to the structural assumptions used in the bound derivation.
-
-## Referenced Material
-
-The project is associated with the paper included in `paper/2609.39230v1.pdf`. A slide deck is also available in `slide/main.pdf`.
 
 ## Notes
 
