@@ -139,6 +139,21 @@
   - For the difference distribution, this frequency view will reveal a non-negativity property and give us the key constraints for the LP.
 ]
 
+#slide(title: "Why Fourier Transform? An Engineering View")[
+  A sound recording may mix several notes. Fourier transform answers:
+  *which pitches are present, and how loud is each one?*
+
+  #align(center)[$s(t) = sin(2 pi 440 t) + 0.5 sin(2 pi 880 t)$]
+
+  The frequency view reveals peaks at $440$ Hz and $880$ Hz. An equalizer can adjust each peak separately.
+
+  - More generally, Fourier transform turns filtering (convolution) into multiplication, one frequency at a time:
+    $f * g quad arrow.r quad hat(f * g)(k) = hat(f)(k) hat(g)(k)$
+
+  - On a finite group, *characters* play the role of waves. Here, autocorrelation gives a nonnegative squared magnitude:
+    $hat(a_C)(chi) = 1 / (|C|) abs(sum_y bb(1)_C(y) overline(chi(y)))^2 >= 0$
+]
+
 #slide(title: "A Frequency View: Fourier Transform")[
   *Definition 3.2 (Fourier Transform)* \
   For a function $f: G --> CC$ on a finite abelian group, its Fourier transform records its correlation with each character:
@@ -181,6 +196,21 @@
 
   - *Computational Bottleneck*:
     - Number of variables = $q^n$ (Exponential!). Impractical when $n >= 10$.
+]
+
+#slide(title: "Why Start with the Full Group-Algebra LP?")[
+  *Start with one variable for every difference* $x in FF_q^n$:
+  $a = sum_(x in FF_q^n) a(x) [x]$
+  This group-algebra view keeps the full pattern; we can merge variables later when structure permits.
+
+  #align(center)[
+    $a(x) quad arrow.r^("same Hamming weight") quad A(j) = sum_(wth(x)=j) a(x)$
+  ]
+
+  For availability, keep repair-view distances instead of merging them away:
+  $Z(t_1,t_2,j,k,c,b)$
+
+  *Principle:* start with the richest model; aggregate only what the code structure lets us identify.
 ]
 
 #slide(title: "Dimension Reduction via Krawtchouk Polynomials")[
