@@ -17,7 +17,7 @@
 
 // Front slide
 #front-slide(
-  title: "Multi-View LP Bounds for LRC with Availability",
+  title: "Multi-View LP Bounds for LRCs",
   subtitle: [Delsarte Linear Programming Bounds in Coding Theory],
   authors: "Po-Wei Lai",
   info: [],
@@ -134,7 +134,7 @@
 #slide(title: "A Frequency View: Fourier Transform")[
   The difference distribution is a function on the additive group $FF_q^n$. Instead of treating every shift $x$ separately, we can ask how this function aligns with simple patterns across the group.
 
-  - These patterns are *characters*: homomorphisms $chi: G --> CC^times$. They play the role of frequency modes on a finite group.
+  - These patterns are *characters*: homomorphisms $chi: FF_q^n --> CC^times$. They play the role of frequency modes on a finite group.
 
   - For the difference distribution, this frequency view will reveal a non-negativity property and give us the key constraints for the LP.
 ]
@@ -199,9 +199,7 @@
 ]
 
 #slide(title: "Why Start with the Full Group-Algebra LP?")[
-  *Start with one variable for every difference* $x in FF_q^n$:
-  $a = sum_(x in FF_q^n) a(x) [x]$
-  This group-algebra view keeps the full pattern; we can merge variables later when structure permits.
+  *Start with one variable for every difference*: This group-algebra view keeps the full pattern; we can merge variables later when structure permits.
 
   #align(center)[
     $a(x) quad arrow.r^("same Hamming weight") quad A(j) = sum_(wth(x)=j) a(x)$
