@@ -97,7 +97,6 @@
 
   - *Classical Combinatorial Bounds*:
     - *Singleton Bound*: $|C| <= q^(n - d + 1)$
-    \
     - *Hamming (Sphere-Packing) Bound*: $|C| <= q^n / (sum_(j=0)^floor((d-1)/2) binom(n, j) (q-1)^j)$
     \
     - *Plotkin Bound* (for binary $2d > n$): $|C| <= (2d) / (2d - n)$
@@ -127,7 +126,7 @@
   - *Key Properties*:
     1. $a_C (bold(0)) = 1$
     2. $a_C (x) >= 0$ for all $x in FF_q^n$
-    3. $a_C (x) = 0$ for all $0 < wth(x) < d_min(C)$
+    3. $a_C (x) = 0$ for all $0 < wth(x) < d_min (C)$
     4. $sum_(x in FF_q^n) a_C (x) = |C|$
 ]
 
@@ -139,26 +138,45 @@
   - For the difference distribution, this frequency view will reveal a non-negativity property and give us the key constraints for the LP.
 ]
 
-#slide(title: "Why Fourier Transform? An Engineering View")[
-  A sound recording may mix several notes. Fourier transform answers:
-  *which pitches are present, and how loud is each one?*
-
-  #align(center)[$s(t) = sin(2 pi 440 t) + 0.5 sin(2 pi 880 t)$]
-
-  The frequency view reveals peaks at $440$ Hz and $880$ Hz. An equalizer can adjust each peak separately.
-
-  - More generally, Fourier transform turns filtering (convolution) into multiplication, one frequency at a time:
-    $f * g quad arrow.r quad hat(f * g)(k) = hat(f)(k) hat(g)(k)$
-
-  - On a finite group, *characters* play the role of waves. Here, autocorrelation gives a nonnegative squared magnitude:
-    $hat(a_C)(chi) = 1 / (|C|) abs(sum_y bb(1)_C(y) overline(chi(y)))^2 >= 0$
+#slide(title: "Properties of Characters")[
+  - *Orthogonality*: \
+    For characters $chi, psi: FF_q^n --> CC^times$:
+    $
+      sum_(x in FF_q^n) chi (x) overline(psi (x)) = cases(q^n", if " chi = psi, 0", otherwise").
+    $
+  - *Character parametrization*: \
+    Every character $chi: FF_q^n --> CC^times$ is uniquely determined by some $u in FF_q^n$ via
+    $
+      chi_u (x) := exp((2 pi i)/p tr_(q/p)(sum_(j=1)^n u_j x_j))
+    $
+    for all $x in FF_q^n$. \
+    We write $chi_u$ for the character corresponding to $u$.
 ]
 
+// #slide(title: "Why Fourier Transform? An Engineering View")[
+//   A sound recording may mix several notes. Fourier transform answers:
+//   *which pitches are present, and how loud is each one?*
+
+//   #align(center)[$s(t) = sin(2 pi 440 t) + 0.5 sin(2 pi 880 t)$]
+
+//   The frequency view reveals peaks at $440$ Hz and $880$ Hz. An equalizer can adjust each peak separately.
+
+//   - More generally, Fourier transform turns filtering (convolution) into multiplication, one frequency at a time:
+//     $f * g quad arrow.r quad hat(f * g)(k) = hat(f)(k) hat(g)(k)$
+
+//   - On a finite group, *characters* play the role of waves. Here, autocorrelation gives a nonnegative squared magnitude:
+//     $hat(a_C)(chi) = 1 / (|C|) abs(sum_y bb(1)_C (y) overline(chi(y)))^2 >= 0$
+// ]
+
 #slide(title: "A Frequency View: Fourier Transform")[
+  - One can show that ${chi_u}_(u in FF_q^n)$ forms an orthogonal basis for the function space 
+    ${FF_q^n --> CC}$.
+
+  - We can understand Fourier transform in $FF_q^n$ by such perspective:
+
   *Definition 3.2 (Fourier Transform)* \
-  For a function $f: G --> CC$ on a finite abelian group, its Fourier transform records its correlation with each character:
-  $ hat(f) (chi) = sum_(x in G) f(x) overline(chi(x)), quad chi in hat(G) $
-  where $hat(G)$ is the set of characters of $G$.
+  For a function $f: FF_q^n --> CC$, its Fourier transform is just taking the coordinate of $f$ respect to ${chi_u}$:
+  $ hat(f) (chi_u) := sum_(x in FF_q^n) f(x) overline(chi_u (x)) $
 ]
 
 #slide(title: "Connection to Fourier Analysis")[
@@ -169,14 +187,14 @@
   
   - Applying Fourier Transform on Finite Abelian Group $FF_q^n$:
     $
-      hat(a_C) (chi) = 1 / (|C|) abs(sum_(y in FF_q^n) bb(1)_C (y) overline(chi(y)))^2 >= 0
+      hat(a_C) (chi_u) = 1 / (|C|) abs(sum_(y in FF_q^n) bb(1)_C (y) overline(chi_u (y)))^2 >= 0
     $
 
   - *Fourier Non-negativity Constraint*:
     - The Fourier coefficients of $a_C$ are *always non-negative*!
   
-  - Study shows that the characters are of the form
-    $chi_u (x) = exp((2 pi i)/p tr(sum_(j=1)^n u_j x_j))$
+  // - Study shows that the characters are of the form
+  //   $chi_u (x) = exp((2 pi i)/p tr(sum_(j=1)^n u_j x_j))$
 ]
 
 #slide(title: "Singleton-level LP Bound")[
@@ -196,19 +214,6 @@
 
   - *Computational Bottleneck*:
     - Number of variables = $q^n$ (Exponential!). Impractical when $n >= 10$.
-]
-
-#slide(title: "Why Start with the Full Group-Algebra LP?")[
-  *Start with one variable for every difference*: This group-algebra view keeps the full pattern; we can merge variables later when structure permits.
-
-  #align(center)[
-    $a(x) quad arrow.r^("same Hamming weight") quad A(j) = sum_(wth(x)=j) a(x)$
-  ]
-
-  For availability, keep repair-view distances instead of merging them away:
-  $Z(t_1,t_2,j,k,c,b)$
-
-  *Principle:* start with the richest model; aggregate only what the code structure lets us identify.
 ]
 
 #slide(title: "Dimension Reduction via Krawtchouk Polynomials")[
@@ -302,6 +307,19 @@
   //     table.hline(stroke: 1.5pt), 
   //   )
   // ]
+]
+
+#slide(title: "Why Start with the Full Group-Algebra LP?")[
+  *Start with one variable for every difference*: This group-algebra view keeps the full pattern; we can merge variables later when structure permits.
+
+  #align(center)[
+    $a(x) quad arrow.r^("same Hamming weight") quad A(j) = sum_(wth(x)=j) a(x)$
+  ]
+
+  For availability, keep repair-view distances instead of merging them away:
+  $Z(t_1,t_2,j,k,c,b)$
+
+  *Principle:* start with the richest model; aggregate only what the code structure lets us identify.
 ]
 
 #title-slide[ Locally Recoverable Codes (LRCs) ]
