@@ -67,7 +67,7 @@
 ]
 
 #slide(title: "Distances & Minimum Distance")[
-  Let $x, y in FF_q^n$.
+  Let $x, y in FF_q^n$, $C subset.eq FF_q^n$.
 
   - *Definition 1.2 (Hamming Distance)*:
     $
@@ -89,7 +89,8 @@
 #title-slide[ Classical Upper Bounds ]
 
 #slide(title: "Why Study Upper Bounds?")[
-  - Given code length $n$ and minimum distance $d$, *how large can $|C|$ be?*
+  - *Problem*: \
+    Fix $q, n, d$, given $C subset.eq FF_q^n$ with $d_min (C) >= d$, *how large can $|C|$ be?*
   
   - *Objectives*:
     - Evaluate code efficiency (Information Rate).
@@ -99,7 +100,7 @@
     - *Singleton Bound*: $|C| <= q^(n - d + 1)$
     - *Hamming (Sphere-Packing) Bound*: $|C| <= q^n / (sum_(j=0)^floor((d-1)/2) binom(n, j) (q-1)^j)$
     \
-    - *Plotkin Bound* (for binary $2d > n$): $|C| <= (2d) / (2d - n)$
+    - *Plotkin Bound* (for $d > (q-1)/q n$): $|C| <= (q d) / (q d - n(q - 1))$
 ]
 
 #slide(title: "What Do Classical Bounds Lack?")[
@@ -117,7 +118,7 @@
   - Instead of looking at individual codewords, we study pair differences.
 
   - *Definition 3.1 (Difference Distribution)* \
-    For $C subset.eq FF_q^n$, define $a_C: FF_q^n arrow.r RR$ as:
+    For $C subset.eq FF_q^n$ with $d_min (C) >= d$, define $a_C: FF_q^n arrow.r RR$ as:
     $
       a_C (x) := 1 / (abs(C)) abs({(y, z) in C^2 : y - z = x})
     $
@@ -126,7 +127,7 @@
   - *Key Properties*:
     1. $a_C (bold(0)) = 1$
     2. $a_C (x) >= 0$ for all $x in FF_q^n$
-    3. $a_C (x) = 0$ for all $0 < wth(x) < d_min (C)$
+    3. $a_C (x) = 0$ for all $0 < wth(x) < d$
     4. $sum_(x in FF_q^n) a_C (x) = |C|$
 ]
 
@@ -169,14 +170,14 @@
 // ]
 
 #slide(title: "A Frequency View: Fourier Transform")[
-  - One can show that ${chi_u}_(u in FF_q^n)$ forms an orthogonal basis for the function space 
-    ${FF_q^n --> CC}$.
+  One can show that ${chi_u}_(u in FF_q^n)$ forms an orthogonal basis for the function space \
+  ${FF_q^n --> CC}$.
 
-  - We can understand Fourier transform in $FF_q^n$ by such perspective:
+  We can understand Fourier transform in $FF_q^n$ by such perspective:
 
-  *Definition 3.2 (Fourier Transform)* \
-  For a function $f: FF_q^n --> CC$, its Fourier transform is just taking the coordinate of $f$ respect to ${chi_u}$:
-  $ hat(f) (chi_u) := sum_(x in FF_q^n) f(x) overline(chi_u (x)) $
+  - *Definition 3.2 (Fourier Transform)* \
+    For a function $f: FF_q^n --> CC$, its Fourier transform is just taking the coordinate of $f$ respect to ${chi_u}$:
+    $ hat(f) (chi_u) := sum_(x in FF_q^n) f(x) overline(chi_u (x)) $
 ]
 
 #slide(title: "Connection to Fourier Analysis")[
@@ -337,14 +338,16 @@
 ]
 
 #slide(title: "Local-distance Availability")[
-  A code has all-symbol local-distance $(r, delta, a)$-availability if, for every coordinate $i$, we can choose $a$ views
+  Given $C subset.eq FF_q^n$ with $d_min (C) >= d$ and $r >= 1, delta >= 2, a >= 1$. \
+  - *Definition 4.1* \
+    The code $C$ has all-symbol local-distance $(r, delta, a)$-availability if, for every coordinate $i$, we can choose $a$ views
 
-  #align(center)[$T_(i,h) = {i} union S_(i,h), quad h=1,...,a$]
+    #align(center)[$T_(i,h) = {i} union S_(i,h), quad h=1,...,a$]
 
-  such that
-  - $|T_(i,h)| <= r + delta - 1$,
-  - the projected code $C|_(T_(i,h))$ has minimum distance at least $delta$,
-  - the helper sets $S_(i,1),...,S_(i,a)$ are pairwise disjoint.
+    such that
+    - $|T_(i,h)| <= r + delta - 1$,
+    - the projected code $C|_(T_(i,h))$ has minimum distance at least $delta$,
+    - the helper sets $S_(i,1),...,S_(i,a)$ are pairwise disjoint.
 
   Since $delta >= 2$, each view can recover an erased coordinate from the other symbols in that view. This local-distance condition is stronger than functional recovery alone.
 ]
